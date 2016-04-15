@@ -18,9 +18,8 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements
-    TimePickerDialog.OnTimeSetListener,
-    DatePickerDialog.OnDateSetListener
-{
+        TimePickerDialog.OnTimeSetListener,
+        DatePickerDialog.OnDateSetListener {
     private TextView timeTextView;
     private TextView dateTextView;
     private CheckBox mode24Hours;
@@ -46,13 +45,13 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         // Find our View instances
-        timeTextView = (TextView)findViewById(R.id.time_textview);
-        dateTextView = (TextView)findViewById(R.id.date_textview);
-        Button timeButton = (Button)findViewById(R.id.time_button);
-        Button dateButton = (Button)findViewById(R.id.date_button);
-        mode24Hours = (CheckBox)findViewById(R.id.mode_24_hours);
-        modeDarkTime = (CheckBox)findViewById(R.id.mode_dark_time);
-        modeDarkDate = (CheckBox)findViewById(R.id.mode_dark_date);
+        timeTextView = (TextView) findViewById(R.id.time_textview);
+        dateTextView = (TextView) findViewById(R.id.date_textview);
+        Button timeButton = (Button) findViewById(R.id.time_button);
+        Button dateButton = (Button) findViewById(R.id.date_button);
+        mode24Hours = (CheckBox) findViewById(R.id.mode_24_hours);
+        modeDarkTime = (CheckBox) findViewById(R.id.mode_dark_time);
+        modeDarkDate = (CheckBox) findViewById(R.id.mode_dark_date);
         modeCustomAccentTime = (CheckBox) findViewById(R.id.mode_custom_accent_time);
         modeCustomAccentDate = (CheckBox) findViewById(R.id.mode_custom_accent_date);
         vibrateTime = (CheckBox) findViewById(R.id.vibrate_time);
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements
                         Log.d("TimePicker", "Dialog was cancelled");
                     }
                 });
-                tpd.show(getFragmentManager(), "Timepickerdialog");
+                tpd.show(getSupportFragmentManager(), "Timepickerdialog");
             }
         });
 
@@ -128,23 +127,23 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 if (limitDates.isChecked()) {
                     Calendar[] dates = new Calendar[13];
-                    for(int i = -6; i <= 6; i++) {
+                    for (int i = -6; i <= 6; i++) {
                         Calendar date = Calendar.getInstance();
                         date.add(Calendar.MONTH, i);
-                        dates[i+6] = date;
+                        dates[i + 6] = date;
                     }
                     dpd.setSelectableDays(dates);
                 }
                 if (highlightDates.isChecked()) {
                     Calendar[] dates = new Calendar[13];
-                    for(int i = -6; i <= 6; i++) {
+                    for (int i = -6; i <= 6; i++) {
                         Calendar date = Calendar.getInstance();
                         date.add(Calendar.WEEK_OF_YEAR, i);
-                        dates[i+6] = date;
+                        dates[i + 6] = date;
                     }
                     dpd.setHighlightedDays(dates);
                 }
-                dpd.show(getFragmentManager(), "Datepickerdialog");
+                dpd.show(getSupportFragmentManager(), "Datepickerdialog");
             }
         });
     }
@@ -152,25 +151,25 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        TimePickerDialog tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("Timepickerdialog");
-        DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("Datepickerdialog");
+        TimePickerDialog tpd = (TimePickerDialog) getSupportFragmentManager().findFragmentByTag("Timepickerdialog");
+        DatePickerDialog dpd = (DatePickerDialog) getSupportFragmentManager().findFragmentByTag("Datepickerdialog");
 
-        if(tpd != null) tpd.setOnTimeSetListener(this);
-        if(dpd != null) dpd.setOnDateSetListener(this);
+        if (tpd != null) tpd.setOnTimeSetListener(this);
+        if (dpd != null) dpd.setOnDateSetListener(this);
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
-        String minuteString = minute < 10 ? "0"+minute : ""+minute;
-        String secondString = second < 10 ? "0"+second : ""+second;
-        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
+        String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+        String minuteString = minute < 10 ? "0" + minute : "" + minute;
+        String secondString = second < 10 ? "0" + second : "" + second;
+        String time = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
         timeTextView.setText(time);
     }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+        String date = "You picked the following date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
         dateTextView.setText(date);
     }
 }
